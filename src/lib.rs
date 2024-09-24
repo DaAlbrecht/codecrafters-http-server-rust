@@ -11,21 +11,17 @@ pub struct HttpResponse {
 
 impl Display for HttpResponse {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-        let mut response = String::new();
-        response.push_str(&format!(
-            "{} {}\r\n",
-            self.status_line.version, self.status_line.status_code
-        ));
+        write!(f, "{}", self.status_line)?;
         if let Some(headers) = &self.headers {
             for (key, value) in headers {
-                response.push_str(&format!("{}: {}\r\n", key, value));
+                write!(f, "{}: {}\r\n", key, value)?;
             }
         }
-        response.push_str("\r\n");
+        write!(f, "\r\n")?;
         if let Some(body) = &self.body {
-            response.push_str(body);
+            write!(f, "{}", body)?;
         }
-        write!(f, "{}", response)
+        Ok(())
     }
 }
 
@@ -33,6 +29,20 @@ pub struct StatusLine {
     pub version: HttpVersion,
     pub status_code: StatusCode,
     pub reason_phrase: Option<String>,
+}
+
+impl Display for StatusLine {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
+        let reason_phrase = match &self.reason_phrase {
+            Some(reason_phrase) => reason_phrase,
+            None => "",
+        };
+        write!(
+            f,
+            "{} {} {}\r\n",
+            self.version, self.status_code, reason_phrase
+        )
+    }
 }
 
 pub enum HttpVersion {

@@ -19,7 +19,7 @@ fn main() {
                     status_line: StatusLine {
                         version: HttpVersion::HTTP_1_1,
                         status_code: StatusCode::OK,
-                        reason_phrase: None,
+                        reason_phrase: Some("OK".to_string()),
                     },
                     headers: None,
                     body: None,
