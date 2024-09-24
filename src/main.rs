@@ -17,7 +17,7 @@ fn main() {
             Ok(mut stream) => {
                 let response = HttpResponse {
                     status_line: StatusLine {
-                        version: HttpVersion::HTTP_1_1,
+                        version: HttpVersion::Http1_1,
                         status_code: StatusCode::OK,
                         reason_phrase: Some("OK".to_string()),
                     },

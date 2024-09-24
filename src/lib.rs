@@ -46,13 +46,13 @@ impl Display for StatusLine {
 }
 
 pub enum HttpVersion {
-    HTTP_1_1,
+    Http1_1,
 }
 
 impl Display for HttpVersion {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         match self {
-            HttpVersion::HTTP_1_1 => write!(f, "HTTP/1.1"),
+            HttpVersion::Http1_1 => write!(f, "HTTP/1.1"),
         }
     }
 }
